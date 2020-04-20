@@ -16,7 +16,14 @@ class RobotFloorCleaner {
   const TIME_TAKEN_TO_FULL_CHARGE_BATTERY = 30;
   const ROBOT_ACTION_STATES               = ['Charging the battery', 'Cleaning the floor'];
 
-  Protected $bIsBatteryFullyCharged = true;
+ /**
+  * @var bool $bIsBatteryFullyCharged carries the status for fully charged battery.
+  */
+  protected $bIsBatteryFullyCharged = true;
+  
+  /**
+  * @var object $oCleaningFloor carries the instance of ApartmentInterface.
+  */
   protected $oCleaningFloor;
 
   //--------------------------------------- Public Methods-----------------------------------\\
