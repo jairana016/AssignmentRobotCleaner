@@ -149,7 +149,6 @@ class RobotFloorCleaner {
 
     $fTotalTimeRequiredToClean += (($fAreaLeftToClean != 0) ? ($fAreaLeftToClean * $iCleaningTimePerSquareMeter) : 0);
 
-    echo $fTotalTimeRequiredToClean;
     return $fTotalTimeRequiredToClean;
   }
 
