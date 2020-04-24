@@ -130,6 +130,7 @@ class RobotFloorCleaner {
     $iCleaningTimePerSquareMeter       = $this->oCleaningFloor->getFloorCleaningTimePerSquareMeter();
     $fFloorArea                        = $this->oCleaningFloor->getFloorArea();
     $fTotalTimeRequiredToClean         = 0;
+    $fAreaLeftToClean                  = fmod($fFloorArea, $iCleanAreaOnceBatteryFullyCharged);
 
     if ($fFloorArea > $iCleanAreaOnceBatteryFullyCharged) {
       $iTurnsRequiredToClean = (int) ($fFloorArea / $iCleanAreaOnceBatteryFullyCharged);
@@ -138,15 +139,17 @@ class RobotFloorCleaner {
       )
       +
       (
-        $iTurnsRequiredToClean * self::TIME_TAKEN_TO_FULL_CHARGE_BATTERY
+        ($fAreaLeftToClean != 0)
+          ? $iTurnsRequiredToClean * self::TIME_TAKEN_TO_FULL_CHARGE_BATTERY
+          : ($iTurnsRequiredToClean - 1) * self::TIME_TAKEN_TO_FULL_CHARGE_BATTERY
       );
     } elseif ($fFloorArea == $iCleanAreaOnceBatteryFullyCharged) {
       $fTotalTimeRequiredToClean = self::BATTERY_LIFE_ONCE_FULLY_CHARGED;
     }
 
-    $fAreaLeftToClean           = fmod($fFloorArea, $iCleanAreaOnceBatteryFullyCharged);
-    $fTotalTimeRequiredToClean += (($fAreaLeftToClean !== 0) ? ($fAreaLeftToClean * $iCleaningTimePerSquareMeter) : 0);
+    $fTotalTimeRequiredToClean += (($fAreaLeftToClean != 0) ? ($fAreaLeftToClean * $iCleaningTimePerSquareMeter) : 0);
 
+    echo $fTotalTimeRequiredToClean;
     return $fTotalTimeRequiredToClean;
   }
 
